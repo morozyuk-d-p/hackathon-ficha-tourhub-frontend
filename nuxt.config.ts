@@ -9,7 +9,6 @@ export default defineNuxtConfig({
   css: [
     '@/assets/scss/index.scss'
   ],
-  devtools: { enabled: true },
   runtimeConfig: {
     public: {
       bingMapsKey: ''
