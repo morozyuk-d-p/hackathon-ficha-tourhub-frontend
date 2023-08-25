@@ -5,7 +5,7 @@
       <h2 class="display-6">Путешествуй уверенно!</h2>
     </section>
     <section id="categories" class="pb-3">
-      <div class="card my-2">
+      <div class="card my-2" @click="$router.push('/map')">
         <div class="row">
           <div class="col-auto ps-4 pe-0 me-0">
             <i class="bi bi-map" style="font-size: 4rem"></i>
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="card my-2">
+      <div class="card my-2" @click="$router.push('/guidebook')">
         <div class="row">
           <div class="col-auto ps-4 pe-0 me-0">
             <i class="bi bi-shop" style="font-size: 4rem"></i>
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="card my-2">
+      <div class="card my-2" @click="$router.push('/calendar')">
         <div class="row">
           <div class="col-auto ps-4 pe-0 me-0">
             <i class="bi bi-calendar3" style="font-size: 4rem"></i>
