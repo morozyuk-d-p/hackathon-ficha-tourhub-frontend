@@ -3,7 +3,7 @@
     <nav class="navbar fixed-top bg-body-tertiary">
       <div class="container-fluid">
         <NuxtLink class="navbar-brand" to="/">
-          <img src="img/logo.png" alt="Логотип" class="mb-1" style="max-height: 2rem;">
+          <img src="/img/logo.png" alt="Логотип" class="mb-1" style="max-height: 2rem;">
         </NuxtLink>
         <button
           id="navbar-toggler"
