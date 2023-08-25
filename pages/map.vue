@@ -1,5 +1,5 @@
 <template>
-  <div id="map" class="w-100 h-100" style="padding-top: 3.5rem"></div>
+  <div id="map" class="w-100 h-100"></div>
 </template>
 
 <script setup lang="ts">
@@ -40,12 +40,12 @@ class ScrollToCurrentLocation extends Control {
 
   handleScrollCurrent() {
     navigator.geolocation.getCurrentPosition((pos: GeolocationPosition) => {
-      console.log(
-        `Coordinates: ${pos.coords.latitude} ${pos.coords.longitude}`
-      );
       this.getMap()
         ?.getView()
         .setCenter([pos.coords.longitude, pos.coords.latitude]);
+      this.getMap()
+        ?.getView()
+        .setZoom(15);
     });
   }
 }
@@ -78,15 +78,12 @@ onMounted(() => {
     }),
   });
   navigator.geolocation.getCurrentPosition((pos: GeolocationPosition) => {
-    console.log(`Coordinates: ${pos.coords.latitude} ${pos.coords.longitude}`);
-    setTimeout(() => {
-      map.setView(
-        new View({
-          center: [pos.coords.longitude, pos.coords.latitude],
-          zoom: 15,
-        })
-      );
-    }, 1000);
+    map.setView(
+      new View({
+        center: [pos.coords.longitude, pos.coords.latitude],
+        zoom: 15,
+      })
+    );
   });
 });
 </script>
