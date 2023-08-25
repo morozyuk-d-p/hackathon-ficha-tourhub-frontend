@@ -3,12 +3,16 @@
 </template>
 
 <script setup lang="ts">
+import { Feature } from "ol";
 import Map from "ol/Map";
 import BingMaps from "ol/source/BingMaps";
 import TileLayer from "ol/layer/Tile";
 import View from "ol/View";
 import { Control, defaults as defaultControls } from "ol/control.js";
 import { useGeographic } from "ol/proj";
+import { Point } from "ol/geom";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 
 useGeographic();
 
@@ -43,9 +47,7 @@ class ScrollToCurrentLocation extends Control {
       this.getMap()
         ?.getView()
         .setCenter([pos.coords.longitude, pos.coords.latitude]);
-      this.getMap()
-        ?.getView()
-        .setZoom(15);
+      this.getMap()?.getView().setZoom(15);
     });
   }
 }
@@ -77,12 +79,28 @@ onMounted(() => {
       zoom: 2,
     }),
   });
-  navigator.geolocation.getCurrentPosition((pos: GeolocationPosition) => {
+
+  navigator.geolocation.getCurrentPosition((pos) => {
     map.setView(
       new View({
         center: [pos.coords.longitude, pos.coords.latitude],
         zoom: 15,
       })
+    );
+  });
+
+  const locationFeature = new Feature();
+
+  new VectorLayer({
+    map: map,
+    source: new VectorSource({
+      features: [locationFeature],
+    }),
+  });
+
+  navigator.geolocation.watchPosition((pos) => {
+    locationFeature.setGeometry(
+      new Point([pos.coords.longitude, pos.coords.latitude])
     );
   });
 });
