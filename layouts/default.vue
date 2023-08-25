@@ -1,6 +1,6 @@
 <template>
   <AppHeader />
-  <main>
+  <main class="vh-100">
     <slot />
   </main>
 </template>

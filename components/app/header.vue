@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar fixed-top bg-body-tertiary">
       <div class="container-fluid">
         <NuxtLink class="navbar-brand" to="/">TourHub</NuxtLink>
         <button
