@@ -7,9 +7,48 @@ import Map from "ol/Map";
 import BingMaps from "ol/source/BingMaps";
 import TileLayer from "ol/layer/Tile";
 import View from "ol/View";
+import { Control, defaults as defaultControls } from "ol/control.js";
 import { useGeographic } from "ol/proj";
 
 useGeographic();
+
+class ScrollToCurrentLocation extends Control {
+  /**
+   * @param {Object} [opt_options] Control options.
+   */
+  constructor(opt_options: object) {
+    const options = opt_options || {};
+
+    const button = document.createElement("button");
+    button.innerHTML = '<i class="bi bi-geo-alt-fill"></i>';
+
+    const element = document.createElement("div");
+    element.className = "scroll-current ol-unselectable ol-control";
+    element.appendChild(button);
+
+    super({
+      element: element,
+      target: options.target,
+    });
+
+    button.addEventListener(
+      "click",
+      this.handleScrollCurrent.bind(this),
+      false
+    );
+  }
+
+  handleScrollCurrent() {
+    navigator.geolocation.getCurrentPosition((pos: GeolocationPosition) => {
+      console.log(
+        `Coordinates: ${pos.coords.latitude} ${pos.coords.longitude}`
+      );
+      this.getMap()
+        ?.getView()
+        .setCenter([pos.coords.longitude, pos.coords.latitude]);
+    });
+  }
+}
 
 const styles = [
   "RoadOnDemand",
@@ -21,6 +60,7 @@ const styles = [
 
 onMounted(() => {
   const map = new Map({
+    controls: defaultControls().extend([new ScrollToCurrentLocation()]),
     target: "map",
     layers: [
       new TileLayer({
@@ -53,4 +93,12 @@ onMounted(() => {
 
 <style lang="scss">
 @import "ol/ol.css";
+
+.scroll-current {
+  top: 65px;
+  left: 0.5em;
+}
+.ol-touch .scroll-current {
+  top: 80px;
+}
 </style>
