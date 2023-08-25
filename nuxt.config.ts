@@ -1,4 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true }
+  app: {
+    head: {
+      title: 'TourHub'
+    },
+    rootId: 'app'
+  },
+  css: [
+    '@/assets/scss/index.scss'
+  ],
+  devtools: { enabled: true },
+  runtimeConfig: {
+    public: {
+      bingMapsKey: ''
+    }
+  },
+  ssr: false,
 })

@@ -10,7 +10,16 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@types/bootstrap": "^5.2.6",
+    "@types/hammerjs": "^2.0.41",
     "@types/node": "^18.17.3",
     "nuxt": "^3.6.5"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.1",
+    "hammerjs": "^2.0.8",
+    "ol": "^7.5.1",
+    "sass": "^1.66.1"
   }
 }
