@@ -43,7 +43,7 @@ onMounted(() => {
       map.setView(
         new View({
           center: [pos.coords.longitude, pos.coords.latitude],
-          zoom: 5,
+          zoom: 15,
         })
       );
     }, 1000);
