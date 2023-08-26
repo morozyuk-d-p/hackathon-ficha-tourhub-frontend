@@ -1,9 +1,10 @@
 <template>
   <div id="map" class="w-100 h-100"></div>
+  <div id="popup"></div>
 </template>
 
 <script setup lang="ts">
-import { Feature } from "ol";
+import { Feature, Overlay } from "ol";
 import Map from "ol/Map";
 import BingMaps from "ol/source/BingMaps";
 import TileLayer from "ol/layer/Tile";
@@ -15,6 +16,7 @@ import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import Style from "ol/style/Style";
 import Icon from "ol/style/Icon.js";
+import * as bootstrap from "bootstrap";
 
 useGeographic();
 
@@ -189,12 +191,47 @@ onMounted(() => {
 
     placeFeature.setGeometry(new Point([item.longitude, item.latitude]));
 
+    placeFeature.set("object", item);
+
     placesSource.addFeature(placeFeature);
   }
 
   const placesLayer = new VectorLayer({
     map: map,
     source: placesSource,
+  });
+
+  const popup = new Overlay({
+    element: document.getElementById("popup"),
+  });
+  map.addOverlay(popup);
+
+  const element = popup.getElement();
+
+  map.on("click", function (evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+      return feature;
+    });
+    if (feature) {
+      const coordinate = evt.coordinate;
+      popup.setPosition(coordinate);
+      let popover = bootstrap.Popover.getInstance(element);
+      if (popover) {
+        popover.dispose();
+      }
+      popover = new bootstrap.Popover(element, {
+        animation: false,
+        container: element,
+        content: `<div class="text-center"><a href="#" class="btn btn-primary">Подробнее</a></div>`,
+        html: true,
+        placement: "auto",
+        title: `<h6>${feature.get("object").name}</h6>`,
+      });
+      popover.show();
+
+      console.log("Found feature");
+      console.log(feature);
+    }
   });
 });
 </script>

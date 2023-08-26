@@ -9,6 +9,11 @@ export default defineNuxtConfig({
   css: [
     '@/assets/scss/index.scss'
   ],
+  routeRules: {
+    '/map': {
+      ssr: false
+    }
+  },
   runtimeConfig: {
     public: {
       bingMapsKey: ''
