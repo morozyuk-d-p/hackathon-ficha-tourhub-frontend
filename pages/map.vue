@@ -64,73 +64,11 @@ const styles = [
   "OrdnanceSurvey",
 ];
 
-const places = [
-  {
-    name: "Литературный музей А.П. Чехова г. Таганрога",
-    latitude: 47.215395,
-    longitude: 38.921432,
-  },
-  {
-    name: "Музей «Домик Чехова»",
-    latitude: 47.206874,
-    longitude: 38.931242,
-  },
-  {
-    name: "Таганрогский художественный музей. Русское искусство",
-    latitude: 47.210179,
-    longitude: 38.930721,
-  },
-  {
-    name: "Историко-краеведческий музей (дворец Алфераки)",
-    latitude: 47.213534,
-    longitude: 38.928277,
-  },
-  {
-    name: "Музей И.Д. Василенко",
-    latitude: 47.209702,
-    longitude: 38.925564,
-  },
-  {
-    name: "Музей «Лавка Чеховых»",
-    latitude: 47.215988,
-    longitude: 38.918063,
-  },
-  {
-    name: "Музей «Градостроительство и быт Таганрога»",
-    latitude: 47.218583,
-    longitude: 38.921109,
-  },
-  {
-    name: "Музей А.А. Дурова",
-    latitude: 47.209176,
-    longitude: 38.922762,
-  },
-  {
-    name: "МАУК «Таганрогский музейный комплекс»",
-    latitude: 47.203513,
-    longitude: 38.940979,
-  },
-  {
-    name: "Парк имени 300-летия города Таганрога",
-    latitude: 47.221552,
-    longitude: 38.85678,
-  },
-  {
-    name: "Дом П.Е. Чехова",
-    latitude: 47.207443,
-    longitude: 38.922923,
-  },
-  {
-    name: "Южно-Российский научно-культурный центр А.П. Чехова",
-    latitude: 47.215395,
-    longitude: 38.921432,
-  },
-  {
-    name: "Таганрогский военно-исторический музей",
-    latitude: 47.22291,
-    longitude: 38.934197,
-  },
-];
+const places = ref(
+  (await useNuxtApp().$axios.get(
+    `${useRuntimeConfig().public.apiBase}/api/maps/locations`
+  )).data
+);
 
 onMounted(() => {
   const map = new Map({
@@ -178,7 +116,7 @@ onMounted(() => {
 
   const placesSource = new VectorSource();
 
-  for (let item of places) {
+  for (let item of places.value) {
     const placeFeature = new Feature();
     placeFeature.setStyle(
       new Style({
@@ -228,9 +166,6 @@ onMounted(() => {
         title: `<h6>${feature.get("object").name}</h6>`,
       });
       popover.show();
-
-      console.log("Found feature");
-      console.log(feature);
     }
   });
 });

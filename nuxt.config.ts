@@ -9,6 +9,12 @@ export default defineNuxtConfig({
   css: [
     '@/assets/scss/index.scss'
   ],
+  plugins: [
+    {
+      src: '~/plugins/axios.ts',
+      mode: 'all'
+    }
+  ],
   routeRules: {
     '/map': {
       ssr: false
@@ -16,6 +22,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      apiBase: '',
       bingMapsKey: ''
     }
   },
